@@ -1,3 +1,5 @@
+package garbage;
+
 import io.restassured.RestAssured;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
@@ -6,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HelloWorldTest {
     @Test
@@ -152,5 +157,13 @@ public class HelloWorldTest {
                 .andReturn();
 
         responseForCheck.print();
+    }
+    @Test
+    public void testRestAssured7(){
+        Response response = RestAssured
+                .get("https://playground.learnqa.ru/api/map1")
+                .andReturn();
+        //assertTrue(response.statusCode() == 200, "Unexpected status code");
+        assertEquals(200, response.statusCode(), "Unexpected status code");
     }
 }
