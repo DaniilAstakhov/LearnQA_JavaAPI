@@ -114,10 +114,67 @@ public class UserEditTest extends BaseTestCase {
                 this.getCookie(responseGetAuth, "auth_sid"),
                 editData);
         //Check
-        responseEditUser.prettyPrint();
-        responseEditUser.print();
-        System.out.println(responseEditUser.asString());
         Assertions.assertResponseCodeEquals(responseEditUser, 400);
-        Assertions.assertResponseTextEquals(responseEditUser, "Auth token not supplied");
+        Assertions.assertResponseTextEquals(responseEditUser, "You are not logged in as the user you want to edit");
+    }
+
+    @Test
+    @Description("Trying to change the user's data, with wrong email, being authorized as same user")
+    @DisplayName("The test of editing a user with wrong email, being logged in")
+
+    public void EditAsSameUserWithWrongEmailTest(){
+        //GENERATE USER
+        Map<String, String> userData = DataGenerator.getRegistrationData();
+        JsonPath responseCreateAuth = apiCoreRequests.makeJsonPathPostRequest("https://playground.learnqa.ru/api/user/", userData);
+        String userId = responseCreateAuth.getString("id");
+
+        //LOGIN
+        Map<String, String> authData = new HashMap<>();
+        authData.put("email", userData.get("email"));
+        authData.put("password", userData.get("password"));
+        Response responseGetAuth = apiCoreRequests.makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
+
+        //EDIT
+        String newEmail = "newWrongEmail.test";
+        Map<String, String> editData = new HashMap<>();
+        editData.put("email", newEmail);
+
+        Response responseEditUser = apiCoreRequests.makePutRequest("https://playground.learnqa.ru/api/user/" + userId,
+                this.getHeader(responseGetAuth, "x-csrf-token"),
+                this.getCookie(responseGetAuth, "auth_sid"),
+                editData);
+        //Check
+        Assertions.assertResponseCodeEquals(responseEditUser, 400);
+        Assertions.assertResponseTextEquals(responseEditUser, "Invalid email format");
+    }
+
+    @Test
+    @Description("Trying to change the user's data, with too short firstname, being authorized as same user")
+    @DisplayName("The test of editing a user with too short firstname, being logged in")
+
+    public void EditAsSameUserWithTooShortFirstnameTest(){
+        //GENERATE USER
+        Map<String, String> userData = DataGenerator.getRegistrationData();
+        JsonPath responseCreateAuth = apiCoreRequests.makeJsonPathPostRequest("https://playground.learnqa.ru/api/user/", userData);
+        String userId = responseCreateAuth.getString("id");
+
+        //LOGIN
+        Map<String, String> authData = new HashMap<>();
+        authData.put("email", userData.get("email"));
+        authData.put("password", userData.get("password"));
+        Response responseGetAuth = apiCoreRequests.makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
+
+        //EDIT
+        String shortFirstName = "a";
+        Map<String, String> editData = new HashMap<>();
+        editData.put("firstName", shortFirstName);
+
+        Response responseEditUser = apiCoreRequests.makePutRequest("https://playground.learnqa.ru/api/user/" + userId,
+                this.getHeader(responseGetAuth, "x-csrf-token"),
+                this.getCookie(responseGetAuth, "auth_sid"),
+                editData);
+        //Check
+        Assertions.assertResponseCodeEquals(responseEditUser, 400);
+        Assertions.assertJsonByName(responseEditUser, "error", "Too short value for field firstName");
     }
 }
