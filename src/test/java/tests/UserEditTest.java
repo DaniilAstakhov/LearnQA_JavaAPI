@@ -1,6 +1,9 @@
 package tests;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -16,6 +19,8 @@ public class UserEditTest extends BaseTestCase {
 
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
     @Test
+    @Epic("Editing users")
+    @Severity(SeverityLevel.NORMAL)
     public void EditJustCreatedTest(){
         //GENERATE USER
         Map<String, String> userData = DataGenerator.getRegistrationData();
@@ -64,8 +69,10 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("Editing users")
     @Description("Trying to change the user's data, being unauthorized")
     @DisplayName("User editing test without authorization")
+    @Severity(SeverityLevel.NORMAL)
 
     public void EditWithoutAuthorizationTest(){
         //GENERATE USER
@@ -87,8 +94,10 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("Editing users")
     @Description("Trying to change the user's data, being authorized as other user")
     @DisplayName("The test of editing a user being logged in as another user")
+    @Severity(SeverityLevel.NORMAL)
 
     public void EditAsOtherUserTest(){
         //GENERATE USER
@@ -119,8 +128,10 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("Editing users")
     @Description("Trying to change the user's data, with wrong email, being authorized as same user")
     @DisplayName("The test of editing a user with wrong email, being logged in")
+    @Severity(SeverityLevel.NORMAL)
 
     public void EditAsSameUserWithWrongEmailTest(){
         //GENERATE USER
@@ -149,8 +160,10 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("Editing users")
     @Description("Trying to change the user's data, with too short firstname, being authorized as same user")
     @DisplayName("The test of editing a user with too short firstname, being logged in")
+    @Severity(SeverityLevel.NORMAL)
 
     public void EditAsSameUserWithTooShortFirstnameTest(){
         //GENERATE USER

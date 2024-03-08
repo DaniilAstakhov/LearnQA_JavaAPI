@@ -1,6 +1,9 @@
 package tests;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.Assertions;
@@ -18,6 +21,8 @@ import java.util.Map;
 public class UserRegisterTest extends BaseTestCase {
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
     @Test
+    @Epic("User registration")
+    @Severity(SeverityLevel.BLOCKER)
     public void testCreateUserWithExistingEmail(){
         String email = "vinkotov@example.com";
 
@@ -40,6 +45,8 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("User registration")
+    @Severity(SeverityLevel.BLOCKER)
     public void testCreateUserSuccessfully(){
         String email = DataGenerator.getRandomEmail();
 
@@ -61,8 +68,10 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("User registration")
     @Description("This test creates a user with an incorrect email - without a symbol @")
     @DisplayName("Negative user creation test (incorrect email - without a symbol @)")
+    @Severity(SeverityLevel.BLOCKER)
     public void testCreateUserWithIncorrectEmail(){
         String email = "incorrectEmail.com";
 
@@ -78,8 +87,10 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("User registration")
     @Description("This test creates a user with an incorrect name - very short name in one character")
     @DisplayName("Negative user creation test (incorrect name - very short name in one character")
+    @Severity(SeverityLevel.BLOCKER)
     public void testCreateUserWithTooShortName(){
         String username = "a";
 
@@ -95,8 +106,10 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("User registration")
     @Description("This test creates a user with an incorrect name - very long name in 250+ characters")
     @DisplayName("Negative user creation test (incorrect name - very long name in 250+ characters")
+    @Severity(SeverityLevel.BLOCKER)
     public void testCreateUserWithTooLongName(){
         String username = "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
 
@@ -112,8 +125,10 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
 
+    @Epic("User registration")
     @Description("This test creates a user without specifying one of the fields")
     @DisplayName("Negative user creation test (user without one of the fields")
+    @Severity(SeverityLevel.BLOCKER)
     @ParameterizedTest
     @ValueSource(strings = {"email", "password", "username", "firstName", "lastName"})
     public void testCreateUserWithoutOneOfTheFields(String field){

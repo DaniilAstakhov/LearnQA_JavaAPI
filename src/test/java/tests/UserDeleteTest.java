@@ -1,6 +1,9 @@
 package tests;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -15,8 +18,10 @@ public class UserDeleteTest extends BaseTestCase{
 
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
     @Test
+    @Epic("Deleting users")
     @Description("A test for trying to delete a user by ID 2.")
     @DisplayName("Delete user with id=2 test")
+    @Severity(SeverityLevel.CRITICAL)
     public void UserDeleteTest(){
         Map<String, String> authData = new HashMap<>();
         authData.put("email", "vinkotov@example.com");
@@ -34,8 +39,10 @@ public class UserDeleteTest extends BaseTestCase{
     }
 
     @Test
+    @Epic("Deleting users")
     @Description("A test for trying to delete a new user")
     @DisplayName("Delete new user")
+    @Severity(SeverityLevel.CRITICAL)
     public void UserDeleteJustCreatedTest(){
         //CREATE USER
         Map<String, String> userData = DataGenerator.getRegistrationData();
@@ -65,8 +72,10 @@ public class UserDeleteTest extends BaseTestCase{
     }
 
     @Test
+    @Epic("Deleting users")
     @Description("A test for trying to delete a user, being authorized as other user")
     @DisplayName("Delete new user, being authorized as other user")
+    @Severity(SeverityLevel.CRITICAL)
     public void UserDeleteAsOtherUserTest(){
         //CREATE 2 USERs
         Map<String, String> userData = DataGenerator.getRegistrationData();
